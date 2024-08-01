@@ -35,7 +35,7 @@ while not IsConfluent(T32_RWS) do
     SetOrderingOfKBMAGRewritingSystem(T32_RWS,"wreathprod", shf_order);
 
     O := OptionsRecordOfKBMAGRewritingSystem(T32_RWS);
-    O.maxeqns:=1000000; 
+    O.maxeqns:=100000; 
 
     MakeConfluent(T32_RWS);
 od;
