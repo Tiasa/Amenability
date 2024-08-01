@@ -1,4 +1,4 @@
-KB_ALGORITHM := function(BCS_output,KB_max)
+ KB_ALGORITHM := function(BCS_output,KB_max)
 	local mhom, mon, G, t, R;
 	# Quotient free group by necessary relations
 	G := BCS_output[1]/BCS_output[2];

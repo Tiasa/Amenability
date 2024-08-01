@@ -55,27 +55,27 @@ BCS_presentation := function(A,c)
 	return [F, constraint_list];
 	end;;
 
+
+# Homogenous Case 
 BCS_NO_j_presentation := function(A,c)
-	local dims,m,n,F,J,constraint_list,constraint_elements,gens,i,j,k,l,boolflag;
+	local dims,m,n,F,constraint_list,constraint_elements,gens,i,j,k,l,boolflag;
 	
 	dims := DimensionsMat(A);
 	m := dims[1]; # number of equations
 	n := dims[2]; # number of edges
 	
 	# include extra generator for the J element
-	F := FreeGroup( n + 1);
-	J := F.(n+1);
+	F := FreeGroup( n );
 	gens := GeneratorsOfGroup(F);
 	
 	# begin constructing constraints
 	constraint_list := [];
-	Append(constraint_list,[J]);	
-	# make all elements idempotent and make J commute with everything
-	Append(constraint_list,[J^2]);
+		
+	# make all elements idempotent
+	
 	
 	for i in [1..n] do
 		Append(constraint_list,[gens[i]^2]);
-		Append(constraint_list,[commuting_relation(gens[i],J)]);	
 	od;	
 
 	# add in linear constraints
@@ -98,12 +98,9 @@ BCS_NO_j_presentation := function(A,c)
 	# boolean variable, checks if constraint_elements is empty
 	boolflag := (constraint_elements=[]);
 	# add in the linear constraint
+		# Homogenous Case
 		if boolflag = false then
-			if c[i]=1 then
-				Append(constraint_list, [Product(constraint_elements,J)]);
-			else
-				Append(constraint_list, [Product(constraint_elements)]);
-			fi;
+			Append(constraint_list, [Product(constraint_elements)]);
 		fi;
 	
 	od;
@@ -111,6 +108,7 @@ BCS_NO_j_presentation := function(A,c)
 	# output presentation and constraints
 	return [F, constraint_list];
 	end;;
+
 
 cyclic_BCS := function(A,c)
 	local dims,m,n,F,J,constraint_list,constraint_elements,gens,i,j,k,l,temp_list,tmp;
